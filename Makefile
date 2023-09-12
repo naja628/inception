@@ -1,5 +1,5 @@
 NAME=inception
-VOLUMES_DIR=data
+VOLUMES_DIR=/home/najacque/data
 
 $(NAME): build up
 
