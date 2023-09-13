@@ -1,0 +1,4 @@
+#!/bin/bash
+docker rm $(docker ps -a -q)
+docker volume rm srcs_db srcs_wordpress
+exit 0

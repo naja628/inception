@@ -8,6 +8,7 @@ $(NAME): build up
 all: $(NAME)
 
 build: 
+	[ -f srcs/.env ] || echo 'missing .env file'
 	sudo sh -c "echo '127.0.0.1	najacque.42.fr' >> /etc/hosts"
 	sudo sh -c "echo '127.0.0.1	www.najacque.42.fr' >> /etc/hosts"
 	mkdir -p ${VOLUMES_DIR}/db ${VOLUMES_DIR}/wordpress
@@ -27,7 +28,6 @@ re: clean
 clean: down
 	sudo rm -rf ${VOLUMES_DIR}/db
 	sudo rm -rf ${VOLUMES_DIR}/wordpress
-	docker ps -a -q | xargs docker rm
-	docker volume rm requirements_db requirements_wordpress
+	bash scripts/docker_cleanup
 
 .PHONY: all build up down re clean 
