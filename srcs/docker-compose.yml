@@ -1,0 +1,66 @@
+version: "3.8"
+# TODO actual version on lubuntu install
+
+services:
+  #
+  nginx:
+    build:
+      context: ./requirement/nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    networks:
+      - dockernet
+    env_file:
+      - ./.env
+    volumes:
+      - wordpress:/var/www/website
+    ports:
+      - 443:443
+    depends_on: 
+      - wordpress
+    restart: on-failure
+  #
+  wordpress:
+    build:
+      context: ./requirement/wordpress
+      dockerfile: Dockerfile
+    container_name: wordpress
+    networks:
+      - dockernet
+    env_file:
+      - ./.env
+    volumes:
+      - wordpress:/var/www/website
+    depends_on: 
+      - mariadb
+    restart: on-failure
+  #
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    container_name: mariadb
+    networks:
+      - dockernet
+    env_file:
+      - ./.env
+    volumes:
+      - db:/var/lib/mysql
+    restart: on-failure
+
+volumes:
+  wordpress:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/najacque/wordpress
+  db:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/najacque/db
+
+networks:
+  dockernet:
