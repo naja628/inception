@@ -3,10 +3,9 @@ FROM debian:bullseye
 # change php version depending on base image
 RUN apt update && apt install php7.4-dev php7.4-fpm php7.4-mysql -y
 RUN apt install mariadb-client -y
-RUN apt install wget curl -y # only needed for build so DF could be improved by using 2 stages
 
-# bust cache
-#RUN touch /tmp/foo
+# only needed for build so DF could be improved by using 2 stages
+RUN apt install wget curl -y 
 
 # download latest version of wordpress (as tar + extract)
 WORKDIR /var/www/website
@@ -17,6 +16,7 @@ RUN wget https://wordpress.org/latest.tar.gz && \
 	rmdir wordpress
 
 COPY conf/wp-config.php .
+
 
 # download wp-cli tool
 RUN curl https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -o /usr/bin/wp && \
@@ -31,7 +31,4 @@ COPY conf/php /etc/php/7.4/fpm
 RUN mkdir /run/php
 
 COPY scripts/ /
-#ENTRYPOINT ["php-fpm7.4", "-F"]
-#ENTRYPOINT ["/setenv_runfpm"]
 ENTRYPOINT ["/bin/bash", "/setenv_runfpm"]
-#CMD ["/bin/bash"]

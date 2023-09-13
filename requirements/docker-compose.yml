@@ -1,4 +1,5 @@
 version: "3.8"
+# TODO actual version on lubuntu install
 
 services:
   #
@@ -53,13 +54,13 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: ./data/wordpress
+      device: /home/najacque/wordpress
   db:
     driver: local
     driver_opts:
       o: bind
       type: none
-      device: ./data/db
+      device: /home/najacque/db
 
 networks:
   dockernet:
