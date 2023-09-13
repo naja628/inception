@@ -7,8 +7,8 @@ $(NAME): build up
 all: $(NAME)
 
 build: 
-	sudo (echo "127.0.0.1 najacque.42.fr" >> /etc/hosts)
-	sudo (echo "127.0.0.1 www.najacque.42.fr" >> /etc/hosts)
+	sudo sh -c 'echo \'127.0.0.1 najacque.42.fr\' >> /etc/hosts'
+	sudo sh -c 'echo \'127.0.0.1 www.najacque.42.fr\' >> /etc/hosts'
 	mkdir -p ${VOLUMES_DIR}/db ${VOLUMES_DIR}/wordpress
 	${DOCKER_COMPOSE} build
 
