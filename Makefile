@@ -26,6 +26,7 @@ re: clean
 clean: down
 	sudo rm -rf ${VOLUMES_DIR}/db
 	sudo rm -rf ${VOLUMES_DIR}/wordpress
+	docker ps -a -q | xargs docker rm
 	docker volume rm requirements_db requirements_wordpress
 
 .PHONY: all build up down re clean 
